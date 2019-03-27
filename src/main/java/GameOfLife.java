@@ -64,16 +64,19 @@ public class GameOfLife {
    /**
     * Meine Regeln
     */
-   private void regeln() {
+   private void rules() {
       boolean[][] newGeneration = new boolean[ROW][COL];
 
       for (int x = 0; x < ROW; x++) {
          for (int y = 0; y < COL; y++) {
             int neightbors = countNeighbors(x,y);
-
-            // TODO Regeln einfügen
-
-            newGeneration[x][y] = field[x][y];
+            if (neightbors < 2 || neightbors > 3) {
+               newGeneration[x][y] = false;
+            } else if (!field[x][y] && neightbors == 3) {
+               newGeneration[x][y] = true;
+            } else {
+               newGeneration[x][y] = field[x][y];
+            }
          }
       }
 
@@ -87,6 +90,11 @@ public class GameOfLife {
       game.showField();
 
       int count = game.countNeighbors(0,0);
-      System.out.println("\n" + count);
+
+      for (int i = 0; i <= 10; i++) {
+         System.out.println();
+         game.rules();
+         game.showField();
+      }
    }
 }
